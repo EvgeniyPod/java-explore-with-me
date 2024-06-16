@@ -44,4 +44,24 @@ public class EventAdminController {
         log.info("Запрос на обновление события {} ", eventId);
         return eventService.updateEventByAdmin(eventId, eventDto);
     }
+
+    /** Возвращает список событий по имени места. */
+    @GetMapping("/places")
+    @Transactional(readOnly = true)
+    public List<EventFullDto> findEventsByPlaceName(@RequestParam String placeName,
+                                                    @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                                    @Positive @RequestParam(defaultValue = "10") int size) {
+        log.info("Запрос на получение событий в месте с именем {} from={} size={}", placeName, from, size);
+        return eventService.findEventsByPlaceName(placeName, from, size);
+    }
+
+    /** Возвращает список событий по идентификатору места. */
+    @GetMapping("/places/{placeId}")
+    @Transactional(readOnly = true)
+    public List<EventFullDto> findEventsByPlaceId(@Positive @PathVariable int placeId,
+                                                  @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                                  @Positive @RequestParam(defaultValue = "10") int size) {
+        log.info("Запрос на получение событий в месте с id {} from={} size={}", placeId, from, size);
+        return eventService.findEventsByPlaceId(placeId, from, size);
+    }
 }

@@ -25,6 +25,4 @@ public class ClientStatsPost extends ClientStats {
     public ResponseEntity<Object> addStatInfo(@RequestBody EndpointHitDto endpointHitDto) {
         return post("", endpointHitDto);
     }
-
-
 }

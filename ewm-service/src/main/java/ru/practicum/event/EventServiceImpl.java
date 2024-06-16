@@ -16,6 +16,8 @@ import ru.practicum.event.dto.EventShortDto;
 import ru.practicum.event.dto.NewEventDto;
 import ru.practicum.event.dto.UpdateEventAdminRequest;
 import ru.practicum.event.dto.UpdateEventUserRequest;
+import ru.practicum.eventsinplace.EventsInPlaceMapper;
+import ru.practicum.eventsinplace.EventsInPlaceRepository;
 import ru.practicum.exception.InvalidEventStateOrDate;
 import ru.practicum.exception.InvalidPathVariableException;
 import ru.practicum.location.Location;
@@ -38,6 +40,7 @@ public class EventServiceImpl implements EventService {
     private final LocationRepository locationRepository;
     private final CategoryService categoryService;
     private final UserService userService;
+    private final EventsInPlaceRepository eventsInPlaceRepository;
 
     /**
      * Найти событие по идентификатору и состоянию.
@@ -325,5 +328,33 @@ public class EventServiceImpl implements EventService {
     public Event getEventById(int eventId) {
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new ObjectNotFoundException(eventId, "Событие с id " + eventId + " не найдено"));
+    }
+
+    /**
+     * Найти события по идентификатору места.
+     *
+     * @param placeId идентификатор места
+     * @param from    начальная позиция возвращаемого списка
+     * @param size    количество событий для возврата
+     * @return список событий, соответствующих идентификатору места
+     * @throws ObjectNotFoundException если не найдены события для указанного места
+     */
+    @Override
+    public List<EventFullDto> findEventsByPlaceId(int placeId, int from, int size) {
+        return EventsInPlaceMapper.toEventFullDto(eventsInPlaceRepository.findEventsByPlaceId(placeId, from, size));
+    }
+
+    /**
+     * Найти события по имени места.
+     *
+     * @param placeName имя места
+     * @param from      начальная позиция возвращаемого списка
+     * @param size      количество событий для возврата
+     * @return список событий, соответствующих имени места
+     * @throws ObjectNotFoundException если не найдены события для указанного имени места
+     */
+    @Override
+    public List<EventFullDto> findEventsByPlaceName(String placeName, int from, int size) {
+        return EventsInPlaceMapper.toEventFullDto(eventsInPlaceRepository.findEventsByPlaceName(placeName, from, size));
     }
 }
