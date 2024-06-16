@@ -40,7 +40,7 @@ public class PlaceAdminController {
     }
 
     /** Обновить информацию о месте по его идентификатору. */
-     @PatchMapping("/{placeId}")
+    @PatchMapping("/{placeId}")
     public PlaceDto updatePlace(@Positive @PathVariable int placeId, @Valid @RequestBody PlaceDto placeDto) {
         log.info("Запрос на обновление места {}", placeId);
         return placeService.updatePlace(placeId, placeDto);
@@ -56,7 +56,7 @@ public class PlaceAdminController {
     }
 
     /** Удалить место по его идентификатору. */
-     @DeleteMapping("/{placeId}")
+    @DeleteMapping("/{placeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePlace(@Positive @PathVariable int placeId) {
         log.info("Удаление места по идентификатору {} ", placeId);
@@ -64,7 +64,7 @@ public class PlaceAdminController {
     }
 
     /** Получить информацию о месте по его идентификатору. */
-     @GetMapping("/{placeId}")
+    @GetMapping("/{placeId}")
     @Transactional(readOnly = true)
     public PlaceDto getPlaceById(@Positive @PathVariable int placeId) {
         log.info("Запрос на получение информации о месте {}", placeId);
