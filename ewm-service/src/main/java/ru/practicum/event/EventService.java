@@ -21,6 +21,8 @@ public interface EventService {
 
     Event getEventById(int eventId);
 
+    EventFullDto updateEventByAdmin(int eventId, UpdateEventAdminRequest eventDto);
+
     List<EventShortDto>  findPublicEvents(String text,
                                           Integer[] categories,
                                           Boolean paid,
@@ -31,7 +33,7 @@ public interface EventService {
                                           int from,
                                           int size);
 
-    EventFullDto updateEventByAdmin(int eventId, UpdateEventAdminRequest eventDto);
+
 
     List<EventFullDto> findAdminEvents(Integer[] users,
                                        String[] states,
@@ -40,4 +42,9 @@ public interface EventService {
                                        String rangeEnd,
                                        int from,
                                        int size);
+
+    List<EventFullDto> findEventsByPlaceId(int placeId, int from, int size);
+
+    List<EventFullDto> findEventsByPlaceName(String placeName, int from, int size);
+
 }
